@@ -1,17 +1,17 @@
 package com.example.AlabsTest;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class User {
     private Long id;
 
-    private Timestamp created_at;
-    private Timestamp updated_at;
-    private Date birthdate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDate birthdate;
 
-    private Short is_deleted;
+    private Byte is_deleted;
 
     private BigDecimal price;
 
@@ -19,7 +19,7 @@ public class User {
     private String email;
     private String password;
 
-    public User(Date birthdate, BigDecimal price, String full_name, String email, String password) {
+    public User(LocalDate birthdate, BigDecimal price, String full_name, String email, String password) {
         this.birthdate = birthdate;
         this.price = price;
         this.full_name = full_name;
@@ -35,35 +35,35 @@ public class User {
         this.id = id;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(Timestamp updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public Date getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
-    public Short getIs_deleted() {
+    public Byte getIs_deleted() {
         return is_deleted;
     }
 
-    public void setIs_deleted(Short is_deleted) {
+    public void setIs_deleted(Byte is_deleted) {
         this.is_deleted = is_deleted;
     }
 

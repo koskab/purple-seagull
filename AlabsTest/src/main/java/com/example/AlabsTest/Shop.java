@@ -1,24 +1,23 @@
 package com.example.AlabsTest;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 
 public class Shop {
     private Long id;
 
-    private Timestamp created_at;
-    private Timestamp updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    private Short is_deleted;
+    private Byte isDeleted;
 
     private String name;
     private String address;
-    private String phone_number;
+    private String phoneNumber;
 
-    public Shop(String name, String address, String phone_number) {
+    public Shop(String name, String address, String phoneNumber) {
         this.name = name;
         this.address = address;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
@@ -29,28 +28,28 @@ public class Shop {
         this.id = id;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(Timestamp updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public Short getIs_deleted() {
-        return is_deleted;
+    public Byte getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(Short is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setIsDeleted(Byte isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getName() {
@@ -69,11 +68,11 @@ public class Shop {
         this.address = address;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
