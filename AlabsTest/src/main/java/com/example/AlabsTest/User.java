@@ -1,46 +1,90 @@
 package com.example.AlabsTest;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 
 public class User {
-    private long id;
+    private Long id;
 
-    private String name;
-    private String emailAddress;
-    private HashMap<Item, Integer> cart;
+    private Timestamp created_at;
+    private Timestamp updated_at;
+    private Date birthdate;
 
-    public User(String name, String emailAddress, HashMap<Item, Integer> cart) {
-        this.name = name;
-        this.emailAddress = emailAddress;
-        this.cart = cart;
+    private Short is_deleted;
+
+    private String full_name;
+    private String email;
+    private String password;
+
+    public User(Date birthdate, String full_name, String email, String password) {
+        this.birthdate = birthdate;
+        this.full_name = full_name;
+        this.email = email;
+        this.password = password;
     }
 
-    public long getId(){
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Timestamp getCreated_at() {
+        return created_at;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public Timestamp getUpdated_at() {
+        return updated_at;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setUpdated_at(Timestamp updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public HashMap<Item, Integer> getCart() {
-        return cart;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public Short getIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(Short is_deleted) {
+        this.is_deleted = is_deleted;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
