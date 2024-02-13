@@ -1,8 +1,8 @@
 package com.example.AlabsTest;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashMap;
 
 public class User {
     private Long id;
@@ -13,12 +13,15 @@ public class User {
 
     private Short is_deleted;
 
+    private BigDecimal price;
+
     private String full_name;
     private String email;
     private String password;
 
-    public User(Date birthdate, String full_name, String email, String password) {
+    public User(Date birthdate, BigDecimal price, String full_name, String email, String password) {
         this.birthdate = birthdate;
+        this.price = price;
         this.full_name = full_name;
         this.email = email;
         this.password = password;
@@ -86,5 +89,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
