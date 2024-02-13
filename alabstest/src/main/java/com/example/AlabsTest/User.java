@@ -11,18 +11,18 @@ public class User {
     private LocalDateTime updatedAt;
     private LocalDate birthdate;
 
-    private Byte is_deleted;
+    private Byte isDeleted;
 
     private BigDecimal price;
 
-    private String full_name;
+    private String fullName;
     private String email;
     private String password;
 
-    public User(LocalDate birthdate, BigDecimal price, String full_name, String email, String password) {
+    public User(LocalDate birthdate, BigDecimal price, String fullName, String email, String password) {
         this.birthdate = birthdate;
         this.price = price;
-        this.full_name = full_name;
+        this.fullName = fullName;
         this.email = email;
         this.password = password;
     }
@@ -59,20 +59,20 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public Byte getIs_deleted() {
-        return is_deleted;
+    public Byte getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(Byte is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setIsDeleted(Byte isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
