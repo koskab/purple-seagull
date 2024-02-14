@@ -42,7 +42,7 @@ public class User {
     @Column(name = "is_deleted", nullable = false)
     private Byte isDeleted = 0;
 
-    @Column(name = "fullname", nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullname;
 
     @Column(name = "email", nullable = false)
