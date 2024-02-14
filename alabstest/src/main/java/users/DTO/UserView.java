@@ -1,17 +1,19 @@
 package users.DTO;
 
+import items.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProperties {
-    private LocalDateTime createdAt;
+public class UserView {
     private String fullname;
+    private List<Item> items;
 }
