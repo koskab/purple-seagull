@@ -2,6 +2,7 @@ package users.entity;
 
 import items.entity.Item;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +20,12 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
     @CreatedDate
@@ -39,8 +42,6 @@ public class User {
     @Column(name = "is_deleted", nullable = false)
     private Byte isDeleted = 0;
 
-
-
     @Column(name = "fullname", nullable = false)
     private String fullName;
 
@@ -51,6 +52,7 @@ public class User {
     private String password;
 
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @ManyToMany
