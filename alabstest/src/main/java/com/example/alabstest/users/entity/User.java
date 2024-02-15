@@ -1,6 +1,7 @@
 package com.example.alabstest.users.entity;
 
 import com.example.alabstest.items.entity.Item;
+import com.example.alabstest.shops.entity.Shop;
 import com.example.alabstest.users.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,9 +11,11 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -50,15 +53,18 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "balance", nullable = false)
+    private BigDecimal balance = BigDecimal.ZERO;
+
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @ManyToMany
     @JoinTable(
-            name = "items_users",
+            name = "carts",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
+            inverseJoinColumns = @JoinColumn(name = "shop_id")
     )
-    private List<Item> items;
+    private Set<Shop> shops;
 }
