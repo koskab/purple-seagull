@@ -1,4 +1,4 @@
-package items.DTO;
+package com.example.alabstest.items.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

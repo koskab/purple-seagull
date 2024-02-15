@@ -1,10 +1,9 @@
-package users.DTO;
+package com.example.alabstest.users.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import users.enums.Role;
 
 import java.time.LocalDate;
 
@@ -14,8 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UserCreate {
     private LocalDate birthdate;
-    private String fullname;
+    private String fullName;
     private String email;
     private String password;
-    private Role role;
 }

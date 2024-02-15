@@ -1,6 +1,7 @@
-package shops.entity;
+package com.example.alabstest.users.entity;
 
-import items.entity.Item;
+import com.example.alabstest.items.entity.Item;
+import com.example.alabstest.users.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,17 +10,17 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "shops")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shop {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,22 +35,29 @@ public class Shop {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "birthdate", nullable = false)
+    private LocalDate birthdate;
+
     @Column(name = "is_deleted", nullable = false)
     private Byte isDeleted = 0;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "email", nullable = false)
+    private String email;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToMany
     @JoinTable(
-            name = "shop_items",
-            joinColumns = @JoinColumn(name = "shop_id"),
+            name = "items_users",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
     private List<Item> items;

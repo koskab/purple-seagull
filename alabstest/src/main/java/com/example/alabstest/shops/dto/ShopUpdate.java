@@ -1,6 +1,6 @@
-package shops.DTO;
+package com.example.alabstest.shops.dto;
 
-import items.entity.Item;
+import com.example.alabstest.items.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShopView {
+public class ShopUpdate {
     private String name;
     private String address;
     private String phoneNumber;

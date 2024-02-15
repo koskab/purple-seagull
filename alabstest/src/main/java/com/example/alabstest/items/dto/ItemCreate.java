@@ -1,4 +1,4 @@
-package items.DTO;
+package com.example.alabstest.items.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +12,9 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemUpdate {
+public class ItemCreate {
     private LocalDate deadlineDate;
-    private Byte isDeleted;
     private String name;
-    private Integer count;
-    private BigDecimal price;
+    private Integer count = 0;
+    private BigDecimal price = BigDecimal.valueOf(0);
 }

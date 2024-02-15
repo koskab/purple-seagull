@@ -1,6 +1,5 @@
-package items.repository;
+package com.example.alabstest.items.repository;
 
-import items.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ItemsRepository<Item, Long> extends JpaRepository<Item, Long> {

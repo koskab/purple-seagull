@@ -1,12 +1,12 @@
-package users.DTO;
+package com.example.alabstest.users.dto;
 
-import items.entity.Item;
+import com.example.alabstest.items.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserView {
-    private String fullname;
+    private String fullName;
+    private String email;
+    private LocalDate birthdate;
     private List<Item> items;
 }

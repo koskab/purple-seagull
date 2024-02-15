@@ -1,4 +1,4 @@
-package items.entity;
+package com.example.alabstest.items.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,12 +9,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import shops.entity.Shop;
-import users.entity.User;
 
 @Entity
 @Table(name = "items")

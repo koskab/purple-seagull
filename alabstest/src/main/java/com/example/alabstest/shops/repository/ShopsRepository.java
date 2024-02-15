@@ -1,7 +1,6 @@
-package shops.repository;
+package com.example.alabstest.shops.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import shops.entity.Shop;
 
 public interface ShopsRepository<Shop, Long> extends JpaRepository<Shop, Long> {
 }
