@@ -13,6 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartCreate {
-    private ShopView shop;
-    private ItemView item;
+    private Long shop;
+    private Long item;
 }
