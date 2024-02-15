@@ -10,11 +10,11 @@ public interface UserService {
 
     UserView findById(Long id);
 
-    public User getEntityById(Long id);
+    User getEntityById(Long id);
 
-    public UserIdView createUser(UserCreate userCreate);
+    UserIdView createUser(UserCreate userCreate);
 
-    public void deleteUser(Long id);
+    void deleteUser(Long id);
 
-    public UserIdView updateUser(UserUpdate userUpdate);
+    UserIdView updateUser(UserUpdate userUpdate);
 }
