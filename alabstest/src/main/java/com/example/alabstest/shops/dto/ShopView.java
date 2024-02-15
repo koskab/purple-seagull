@@ -1,5 +1,6 @@
 package com.example.alabstest.shops.dto;
 
+import com.example.alabstest.items.dto.ItemView;
 import com.example.alabstest.items.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class ShopView {
     private String name;
     private String address;
     private String phoneNumber;
-    private List<Long> itemIds;
+    private List<ItemView> items;
 }
