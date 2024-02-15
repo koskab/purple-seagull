@@ -1,8 +1,0 @@
-
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÿ„ê»8Ë¯àÖÚ1
-]
-java:S1128";Remove this unused import 'jakarta.persistence.EmbeddedId'.(ê¤¢Òøÿÿÿÿ8ÛããÖÚ1
-G
-java:S1068"*Remove this unused "itemId" private field.(Æş›æ8åúàÖÚ1
-L
-java:S1068"*Remove this unused "userId" private field.(Â—‹¼úÿÿÿÿ8ƒÒàÖÚ1
