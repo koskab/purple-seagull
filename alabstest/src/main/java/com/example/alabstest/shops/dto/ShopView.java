@@ -1,7 +1,6 @@
 package com.example.alabstest.shops.dto;
 
 import com.example.alabstest.items.dto.ItemView;
-import com.example.alabstest.items.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
