@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,5 +15,5 @@ import java.math.BigDecimal;
 public class UserUpdate {
     private String fullName;
     private String password;
-    private BigDecimal balance;
+    private LocalDate birthdate;
 }
