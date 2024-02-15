@@ -17,5 +17,5 @@ public class ShopView {
     private String name;
     private String address;
     private String phoneNumber;
-    private List<Item> items;
+    private List<Long> itemIds;
 }

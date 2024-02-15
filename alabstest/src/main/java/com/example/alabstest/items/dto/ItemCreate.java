@@ -16,5 +16,5 @@ public class ItemCreate {
     private LocalDate deadlineDate;
     private String name;
     private Integer count = 0;
-    private BigDecimal price = BigDecimal.valueOf(0);
+    private BigDecimal price = BigDecimal.ZERO;
 }
