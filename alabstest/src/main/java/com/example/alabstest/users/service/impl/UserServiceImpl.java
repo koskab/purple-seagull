@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
                 orElseThrow(() -> new RuntimeException("User with such email not found"));
     }
 
+    @Transactional
     @Override
     public User getEntityById(Long id) {
         return userRepository.findById(id)
@@ -40,9 +41,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserEditResponse create(UserCreate userCreate) {
-        User user = UserMapper.INSTANCE.toEntity(userCreate);
-        Long id = userRepository.save(user).getId();
-        return UserMapper.INSTANCE.toView(id);
+        if(getEntityByEmail(userCreate.getEmail()) == null) {
+            if(userCreate.getPassword() == userCreate.getRePassword()) {
+                User user = UserMapper.INSTANCE.toEntity(userCreate);
+                Long id = userRepository.save(user).getId();
+                return UserMapper.INSTANCE.toView(id);
+            }
+            throw new RuntimeException("Passwords don't match");
+        }
+        throw new RuntimeException("User with this email already exists");
     }
 
     @Transactional
@@ -50,17 +57,22 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         if(getEntityById(id) != null){
             userRepository.deleteById(id);
+            return;
         }
-        else {
-            throw (new RuntimeException("User not found"));
-        }
+        throw new RuntimeException("User not found");
     }
 
     @Transactional
     @Override
-    public UserEditResponse update(UserUpdate userUpdate) {
-        User user = UserMapper.INSTANCE.toEntity(userUpdate);
-        Long id = userRepository.save(user).getId();
-        return UserMapper.INSTANCE.toView(id);
+    public UserEditResponse update(Long id, UserUpdate userUpdate) {
+        if(getEntityById(id) != null) {
+            if(userUpdate.getPassword() == userUpdate.getRePassword()) {
+                User user = UserMapper.INSTANCE.toEntity(userUpdate);
+                Long response = userRepository.save(user).getId();
+                return UserMapper.INSTANCE.toView(response);
+            }
+            throw new RuntimeException("Passwords don't match");
+        }
+        throw new RuntimeException("User not found");
     }
 }

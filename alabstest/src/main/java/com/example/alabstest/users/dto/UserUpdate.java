@@ -13,5 +13,6 @@ import java.time.LocalDate;
 public class UserUpdate {
     private String fullName;
     private String password;
+    private String rePassword;
     private LocalDate birthdate;
 }

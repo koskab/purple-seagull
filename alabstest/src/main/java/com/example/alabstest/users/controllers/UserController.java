@@ -22,15 +22,15 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping("{user}")
-    public UserEditResponse createUser(@PathVariable UserCreate user){
+    @PostMapping
+    public UserEditResponse createUser(@RequestBody UserCreate user){
         return userService.create(user);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public UserEditResponse updateUser(@PathVariable Long id, @RequestBody UserUpdate user){
-        return userService.update(user);
+        return userService.update(id, user);
     }
 
     @DeleteMapping("{id}")
@@ -38,5 +38,4 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){
         userService.delete(id);
     }
-
 }
