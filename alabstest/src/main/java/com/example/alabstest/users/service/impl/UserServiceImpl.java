@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
             if(userCreate.getPassword().equals(userCreate.getRePassword())) {
                 User user = UserMapper.INSTANCE.toEntity(userCreate);
                 user = userRepository.save(user);
-                return UserMapper.INSTANCE.toView(user.getId());
+                return new UserEditResponse(user.getId());
             }
             throw new RuntimeException("Passwords don't match");
         }
@@ -66,10 +66,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEditResponse update(Long id, UserUpdate userUpdate) {
         if(getEntityById(id) != null) {
-            if(userUpdate.getPassword() == userUpdate.getRePassword()) {
+            if(userUpdate.getPassword().equals(userUpdate.getRePassword())) {
                 User user = UserMapper.INSTANCE.toEntity(userUpdate);
                 user = userRepository.save(user);
-                return UserMapper.INSTANCE.toView(user.getId());
+                return new UserEditResponse(user.getId());
             }
             throw new RuntimeException("Passwords don't match");
         }
