@@ -1,6 +1,6 @@
 package com.example.alabstest.users.service.impl;
 
-import com.example.alabstest.users.dto.UserIdView;
+import com.example.alabstest.users.dto.UserEditResponse;
 import com.example.alabstest.users.dto.UserCreate;
 import com.example.alabstest.users.dto.UserUpdate;
 import com.example.alabstest.users.dto.UserView;
@@ -21,12 +21,16 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public UserView findById(Long id) {
-        return userRepository.findById(id)
-                .map(UserMapper.INSTANCE::toView)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return UserMapper.INSTANCE.toView(getEntityById(id));
     }
 
     @Transactional(readOnly = true)
+    @Override
+    public User getEntityByEmail(String email){
+        return userRepository.findByEmail(email).
+                orElseThrow(() -> new RuntimeException("User with such email not found"));
+    }
+
     @Override
     public User getEntityById(Long id) {
         return userRepository.findById(id)
@@ -35,23 +39,28 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserIdView createUser(UserCreate userCreate) {
-        return UserMapper.INSTANCE.toView(userRepository
-                .save(UserMapper.INSTANCE.toEntity(userCreate))
-                .getId());
+    public UserEditResponse create(UserCreate userCreate) {
+        User user = UserMapper.INSTANCE.toEntity(userCreate);
+        Long id = userRepository.save(user).getId();
+        return UserMapper.INSTANCE.toView(id);
     }
 
     @Transactional
     @Override
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public void delete(Long id) {
+        if(getEntityById(id) != null){
+            userRepository.deleteById(id);
+        }
+        else {
+            throw (new RuntimeException("User not found"));
+        }
     }
 
     @Transactional
     @Override
-    public UserIdView updateUser(UserUpdate userUpdate) {
-        return UserMapper.INSTANCE.toView(userRepository
-                .save(UserMapper.INSTANCE.toEntity(userUpdate))
-                .getId());
+    public UserEditResponse update(UserUpdate userUpdate) {
+        User user = UserMapper.INSTANCE.toEntity(userUpdate);
+        Long id = userRepository.save(user).getId();
+        return UserMapper.INSTANCE.toView(id);
     }
 }

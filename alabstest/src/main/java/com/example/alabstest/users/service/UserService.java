@@ -1,6 +1,6 @@
 package com.example.alabstest.users.service;
 
-import com.example.alabstest.users.dto.UserIdView;
+import com.example.alabstest.users.dto.UserEditResponse;
 import com.example.alabstest.users.dto.UserCreate;
 import com.example.alabstest.users.dto.UserUpdate;
 import com.example.alabstest.users.dto.UserView;
@@ -12,9 +12,11 @@ public interface UserService {
 
     User getEntityById(Long id);
 
-    UserIdView createUser(UserCreate userCreate);
+    User getEntityByEmail(String email);
 
-    void deleteUser(Long id);
+    UserEditResponse create(UserCreate userCreate);
 
-    UserIdView updateUser(UserUpdate userUpdate);
+    void delete(Long id);
+
+    UserEditResponse update(UserUpdate userUpdate);
 }
