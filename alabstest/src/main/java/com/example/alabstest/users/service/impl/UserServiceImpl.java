@@ -1,13 +1,15 @@
 package com.example.alabstest.users.service.impl;
 
-import com.example.alabstest.users.dto.UserEditResponse;
-import com.example.alabstest.users.dto.UserCreate;
-import com.example.alabstest.users.dto.UserUpdate;
-import com.example.alabstest.users.dto.UserView;
+import com.example.alabstest.core.security.JwtService;
+import com.example.alabstest.users.dto.*;
 import com.example.alabstest.users.entity.User;
 import com.example.alabstest.users.mapper.UserMapper;
 import com.example.alabstest.users.repository.UserRepository;
 import com.example.alabstest.users.service.UserService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @Transactional(readOnly = true)
     @Override
@@ -27,28 +32,32 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public User getEntityByEmail(String email){
-        return userRepository.findByEmail(email).
+        return repository.findByEmail(email).
                 orElseThrow(() -> new RuntimeException("User with such email not found"));
     }
 
     @Transactional(readOnly = true)
     @Override
     public User getEntityById(Long id) {
-        return userRepository.findById(id)
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Transactional
     @Override
     public UserEditResponse create(UserCreate userCreate) {
-        if(getEntityByEmail(userCreate.getEmail()) == null) {
+        if(!repository.existsByEmail(userCreate.getEmail())) {
             if(userCreate.getPassword().equals(userCreate.getRePassword())) {
+                userCreate.setPassword(passwordEncoder.encode(userCreate.getPassword()));
                 User user = UserMapper.INSTANCE.toEntity(userCreate);
-                user = userRepository.save(user);
+
+                user = repository.save(user);
                 return new UserEditResponse(user.getId());
             }
+
             throw new RuntimeException("Passwords don't match");
         }
+
         throw new RuntimeException("User with this email already exists");
     }
 
@@ -56,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         if(getEntityById(id) != null){
-            userRepository.deleteById(id);
+            repository.deleteById(id);
             return;
         }
         throw new RuntimeException("User not found");
@@ -68,11 +77,38 @@ public class UserServiceImpl implements UserService {
         if(getEntityById(id) != null) {
             if(userUpdate.getPassword().equals(userUpdate.getRePassword())) {
                 User user = UserMapper.INSTANCE.toEntity(userUpdate);
-                user = userRepository.save(user);
+                user = repository.save(user);
                 return new UserEditResponse(user.getId());
             }
             throw new RuntimeException("Passwords don't match");
         }
         throw new RuntimeException("User not found");
     }
+
+    @Transactional
+    @Override
+    public UserSignInResponse authenticate(UserSignIn request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        var user = getEntityByEmail(request.getEmail());
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+
+        return UserSignInResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public User getCurrentUser() {
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return getEntityByEmail(username);
+    }
+
 }

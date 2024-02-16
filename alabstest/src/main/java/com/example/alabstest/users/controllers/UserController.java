@@ -1,12 +1,13 @@
 package com.example.alabstest.users.controllers;
 
-import com.example.alabstest.users.dto.UserCreate;
-import com.example.alabstest.users.dto.UserEditResponse;
-import com.example.alabstest.users.dto.UserUpdate;
-import com.example.alabstest.users.dto.UserView;
+import com.example.alabstest.core.security.LogoutService;
+import com.example.alabstest.users.dto.*;
 import com.example.alabstest.users.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,18 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final LogoutService logoutService;
+
+    @PostMapping("/sign-in")
+    public UserSignInResponse signIn(@RequestBody UserSignIn request) {
+        return userService.authenticate(request);
+    }
+
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest request,
+                       HttpServletResponse response, Authentication authentication) {
+        logoutService.logout(request, response, authentication);
+    }
 
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
@@ -38,4 +51,5 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){
         userService.delete(id);
     }
+
 }
