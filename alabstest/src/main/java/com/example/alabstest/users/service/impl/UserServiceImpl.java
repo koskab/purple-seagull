@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
                 orElseThrow(() -> new RuntimeException("User with such email not found"));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public User getEntityById(Long id) {
         return userRepository.findById(id)
@@ -42,10 +42,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEditResponse create(UserCreate userCreate) {
         if(getEntityByEmail(userCreate.getEmail()) == null) {
-            if(userCreate.getPassword() == userCreate.getRePassword()) {
+            if(userCreate.getPassword().equals(userCreate.getRePassword())) {
                 User user = UserMapper.INSTANCE.toEntity(userCreate);
-                Long id = userRepository.save(user).getId();
-                return UserMapper.INSTANCE.toView(id);
+                user = userRepository.save(user);
+                return UserMapper.INSTANCE.toView(user.getId());
             }
             throw new RuntimeException("Passwords don't match");
         }
@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
         if(getEntityById(id) != null) {
             if(userUpdate.getPassword() == userUpdate.getRePassword()) {
                 User user = UserMapper.INSTANCE.toEntity(userUpdate);
-                Long response = userRepository.save(user).getId();
-                return UserMapper.INSTANCE.toView(response);
+                user = userRepository.save(user);
+                return UserMapper.INSTANCE.toView(user.getId());
             }
             throw new RuntimeException("Passwords don't match");
         }
