@@ -6,6 +6,7 @@ import com.example.alabstest.users.dto.UserView;
 import com.example.alabstest.users.entity.User;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(builder = @Builder(disableBuilder = true))
@@ -15,7 +16,7 @@ public interface UserMapper {
 
     User toEntity(UserCreate userCreate);
 
-    User toEntity(UserUpdate userUpdate);
+    User toEntity(@MappingTarget User entity, UserUpdate userUpdate);
 
     UserView toView(User user);
 

@@ -3,6 +3,7 @@ package com.example.alabstest.users.service.impl;
 import com.example.alabstest.core.security.JwtService;
 import com.example.alabstest.users.dto.*;
 import com.example.alabstest.users.entity.User;
+import com.example.alabstest.users.enums.Role;
 import com.example.alabstest.users.mapper.UserMapper;
 import com.example.alabstest.users.repository.UserRepository;
 import com.example.alabstest.users.service.UserService;
@@ -26,7 +27,9 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public UserView findById(Long id) {
-        return UserMapper.INSTANCE.toView(getEntityById(id));
+        if(getCurrentUser().getId() == id || getCurrentUser().getRole() == Role.ROLE_ADMIN)
+            return UserMapper.INSTANCE.toView(getEntityById(id));
+        throw new RuntimeException("Access denied");
     }
 
     @Transactional(readOnly = true)
@@ -50,7 +53,6 @@ public class UserServiceImpl implements UserService {
             if(userCreate.getPassword().equals(userCreate.getRePassword())) {
                 userCreate.setPassword(passwordEncoder.encode(userCreate.getPassword()));
                 User user = UserMapper.INSTANCE.toEntity(userCreate);
-
                 user = repository.save(user);
                 return new UserEditResponse(user.getId());
             }
@@ -64,8 +66,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(Long id) {
-        if(getEntityById(id) != null){
-            repository.deleteById(id);
+        User user = getEntityById(id);
+        if(user != null){
+            user.setIsDeleted((byte) 1);
+            repository.save(user);
             return;
         }
         throw new RuntimeException("User not found");
@@ -76,7 +80,8 @@ public class UserServiceImpl implements UserService {
     public UserEditResponse update(Long id, UserUpdate userUpdate) {
         if(getEntityById(id) != null) {
             if(userUpdate.getPassword().equals(userUpdate.getRePassword())) {
-                User user = UserMapper.INSTANCE.toEntity(userUpdate);
+                userUpdate.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
+                User user = UserMapper.INSTANCE.toEntity(getEntityById(id), userUpdate);
                 user = repository.save(user);
                 return new UserEditResponse(user.getId());
             }
