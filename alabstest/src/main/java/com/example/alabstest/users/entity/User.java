@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt = null;
 
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
