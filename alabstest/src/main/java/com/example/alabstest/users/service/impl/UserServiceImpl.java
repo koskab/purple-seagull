@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -51,10 +53,13 @@ public class UserServiceImpl implements UserService {
     public UserEditResponse create(UserCreate userCreate) {
         if(!repository.existsByEmail(userCreate.getEmail())) {
             if(userCreate.getPassword().equals(userCreate.getRePassword())) {
-                userCreate.setPassword(passwordEncoder.encode(userCreate.getPassword()));
-                User user = UserMapper.INSTANCE.toEntity(userCreate);
-                user = repository.save(user);
-                return new UserEditResponse(user.getId());
+                if(!userCreate.getBirthdate().isAfter(LocalDate.now())) {
+                    userCreate.setPassword(passwordEncoder.encode(userCreate.getPassword()));
+                    User user = UserMapper.INSTANCE.toEntity(userCreate);
+                    user = repository.save(user);
+                    return new UserEditResponse(user.getId());
+                }
+                throw new RuntimeException("Incorrect date of birth");
             }
 
             throw new RuntimeException("Passwords don't match");
@@ -80,10 +85,13 @@ public class UserServiceImpl implements UserService {
     public UserEditResponse update(Long id, UserUpdate userUpdate) {
         if(getEntityById(id) != null) {
             if(userUpdate.getPassword().equals(userUpdate.getRePassword())) {
-                userUpdate.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
-                User user = UserMapper.INSTANCE.toEntity(getEntityById(id), userUpdate);
-                user = repository.save(user);
-                return new UserEditResponse(user.getId());
+                if(!userUpdate.getBirthdate().isAfter(LocalDate.now())) {
+                    userUpdate.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
+                    User user = UserMapper.INSTANCE.toEntity(getEntityById(id), userUpdate);
+                    user = repository.save(user);
+                    return new UserEditResponse(user.getId());
+                }
+                throw new RuntimeException("Incorrect date of birth");
             }
             throw new RuntimeException("Passwords don't match");
         }
